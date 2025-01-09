@@ -60,7 +60,8 @@ class Veicolo:
 #-------------------------------------------------
 if __name__ == '__main__':
     veicolo1 = Veicolo(targa='AA123AA')
-    
+    veicolo2 = Veicolo(cilindrata=1100 , targa='BB456BB')
+    print(veicolo1 <= veicolo2)
 
 
 
