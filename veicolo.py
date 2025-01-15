@@ -4,7 +4,7 @@
 
 listaMarche = ['Fiat' , 'Citroen' , 'Audi' , 'Volkswagen' , 'Mercedes']
 listaColori = ['Rosso' , 'Bianco' , 'Blu' , 'Verde' , 'Giallo' , 'Nero' , 'Grigio']
-lettere = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUWXYZ'
+lettere = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 numeri = '0123456789'
 
 class Veicolo:
@@ -13,6 +13,7 @@ class Veicolo:
             self.marca = marca
         else:
             raise ValueError('Non è una marca')
+        #------------------------------------------------------------------
         self.modello = modello
         #------------------------------------------------------------------
         if colore.capitalize() in listaColori:
@@ -40,7 +41,7 @@ class Veicolo:
     def __le__(self , altroVeicolo):
         if self.marca > altroVeicolo.marca:
             return False
-        elif self.marca > altroVeicolo.marca:
+        elif self.modello > altroVeicolo.modello:
             return False
         elif self.cilindrata > altroVeicolo.cilindrata:
             return False
