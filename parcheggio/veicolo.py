@@ -38,32 +38,37 @@ class Veicolo:
     def __repr__(self):
         return self.__class__.__name__ + str(self.__dict__)
     
-    def __le__(self , altroVeicolo):
-        if self.marca > altroVeicolo.marca:
-            return False
-        elif self.modello > altroVeicolo.modello:
-            return False
-        elif self.cilindrata > altroVeicolo.cilindrata:
-            return False
-        else:
-            return True
-    
-#     def __ge__(self , altroVeicolo:Veicolo):
-#         if self.marca < altroVeicolo.marca:
+#     def __le__(self , altroVeicolo):
+#         if self.marca > altroVeicolo.marca:
 #             return False
-#         elif self.marca < altroVeicolo.marca:
+#         elif self.modello > altroVeicolo.modello:
 #             return False
-#         elif self.cilindrata < altroVeicolo.cilindrata:
+#         elif self.cilindrata > altroVeicolo.cilindrata:
 #             return False
 #         else:
 #             return True
+    
+    def __lt__(self , altroVeicolo):
+        if self.marca < altroVeicolo.marca:
+            return True 
+        elif self.marca == altroVeicolo.marca:
+            if self.modello < altroVeicolo.modello:
+                return True
+            elif self.modello == altroVeicolo.modello:
+                if self.cilindrata < altroVeicolo.cilindrata:
+                    return True
+        return False
+
 
 #-------------------------------------------------
 if __name__ == '__main__':
     veicolo1 = Veicolo(targa='AA123AA')
     veicolo2 = Veicolo(cilindrata=1100 , targa='BB456BB')
     print(veicolo1 <= veicolo2)
-
+    veicolo3 = Veicolo(cilindrata=1200 , targa='BB345BB')
+    listaVeicoli = [veicolo1 , veicolo2 , veicolo3]
+    listaVeicoli.sort()
+    print(listaVeicoli)
 
 
 
