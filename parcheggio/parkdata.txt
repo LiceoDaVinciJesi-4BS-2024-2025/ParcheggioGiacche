@@ -1,2 +1,3 @@
-1000
-200
+999
+499
+Auto{'marca': 'Fiat', 'modello': 'Panda', 'colore': 'Giallo', 'cilindrata': 1000, 'alimentazione': 'parolacce', 'targa': 'AA123AA', 'passeggeriMax': 4, 'passeggeri': 1, 'capacitaMax': 100, 'merce': 0};Moto{'marca': 'Aprilia', 'modello': 'sx', 'colore': 'Giallo', 'cilindrata': 1000, 'alimentazione': 'parolacce', 'targa': 'BB12345', 'passeggeriMax': 2, 'passeggeri': 1, 'capacitaMax': 100, 'merce': 0};

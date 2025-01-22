@@ -23,7 +23,7 @@ class Moto(Veicolo):
             raise ValueError('La cilindrata non è accettabile')
         #------------------------------------------------------------------
         self.alimentazione = alimentazione        #-----------------------------------------------------------------
-        if targa[0] in lettere and targa[1] in lettere and targa[2] in numeri and targa[3] and targa[4] in numeri and targa[5] in numeri and targa[6] in numeri:
+        if targa[0] in lettere and targa[1] in lettere and targa[2] in numeri and targa[3] in numeri and targa[4]  in numeri and targa[5] in numeri and targa[6] in numeri:
             self.targa = targa
         else:
             raise ValueError('Targa non valida')
