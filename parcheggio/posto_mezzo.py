@@ -5,25 +5,25 @@ import datetime
 
 class PostoMezzo:
     def __init__(self , occupato:bool=False , occupante:Veicolo=None , dataOraFine:datetime.datetime=None):
-        self.occupato = occupato
+        self.__occupato = occupato
         #------------------------------------------------------------------
         if occupato == True and occupante != None:
-            self.occupante = occupante
+            self.__occupante = occupante
         elif occupato == False and occupante != None:
             raise ValueError('Il parcheggio non è occupato')
         elif occupato == True and occupante == None:
             raise ValueError('Il parcheggio da chi è occupato?')
         #------------------------------------------------------------------
         if occupato:
-            if dataOraFine > datetime.datetime.today():
-                self.dataOraFine = dataOraFine
+            if dataOraFine > datetime.datetime.now():
+                self.__dataOraFine = dataOraFine
             else:
-                self.occupato = False
-                self.occupante = None
-                self.dataOraFine = None 
+                self.__occupato = False
+                self.__occupante = None
+                self.__dataOraFine = None 
         else:
             if dataOraFine == None:
-                self.dataOraFine = dataOraFine
+                self.__dataOraFine = dataOraFine
             else:
                 raise ValueError('Il parcheggio non è occupato')
     

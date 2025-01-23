@@ -21,7 +21,7 @@ class Parcheggio:
             self.__listaVeicoliParcheggiati.remove('')
         for x in self.__listaVeicoliParcheggiati:
             listaParametriMezzo = x.split(sep='_')
-            if listaParametriMezzo[1] > str(datetime.datetime.today()):
+            if listaParametriMezzo[1] > str(datetime.datetime.now()):
                 if 'Auto' in listaParametriMezzo[0]:
                     self.__postiAutoLiberi += 1
                 elif 'Moto' in listaParametriMezzo[0]:
@@ -52,21 +52,29 @@ class Parcheggio:
     def guadagno(self):
         return self.__guadagno
     
-    def parcheggia(self , posto:PostoMezzo):
-        if type(posto.occupante) == Auto and self.__postiAutoLiberi != 0:
+    def parcheggia(self , veicolo:Veicolo , dataOraArrivo:datetime.datetime):
+        if type(veicolo) == Auto and self.__postiAutoLiberi != 0:
             self.__postiAutoLiberi -= 1
-            orePermanenza = posto.dataOraFine - datetime.datetime.today()
-            saldoDaPagare = (int(orePermanenza.total_seconds())/60) * 1.5
-            self.__listaVeicoliParcheggiati.append(f'{posto.occupante}_{posto.dataOraFine}')
+            arrivo = dataOraArrivo.total_seconds()
+#             orePermanenza = posto.dataOraFine - datetime.datetime.today()
+#             saldoDaPagare = (int(orePermanenza.total_seconds())/60) * 1.5
+            self.__listaVeicoliParcheggiati.append(f'{veicolo}_{dataOraArrivo}')
         
-        elif type(posto.occupante) == Moto and self.__postiMotoLiberi != 0:
+        elif type(veicolo) == Moto and self.__postiMotoLiberi != 0:
             self.__postiMotoLiberi -= 1
-            orePermanenza = posto.dataOraFine - datetime.datetime.today()
-            saldoDaPagare = (int(orePermanenza.total_seconds())/60) * 1.2
-            self.__listaVeicoliParcheggiati.append(f'{posto.occupante}_{posto.dataOraFine}')
+#             orePermanenza = posto.dataOraFine - datetime.datetime.today()
+#             saldoDaPagare = (int(orePermanenza.total_seconds())/60) * 1.2
+            self.__listaVeicoliParcheggiati.append(f'{veicolo}_{dataOraArrivo}')
 
         else:
             raise ValueError('Non abbiamo posti liberi per quel veicolo')
+    
+    def vaiVia(self , veicolo:Veicolo):
+        if str(veicolo) in self.__listaVeicoliParcheggiati:
+            for x in lista:
+                if str(x) in self.__listaVeicoliParcheggiati:
+                    veicoloCheSeNeVa = x
+            
         
         self.__guadagno = float(self.__guadagno) + saldoDaPagare
         #-----------------------------------------------------------------
