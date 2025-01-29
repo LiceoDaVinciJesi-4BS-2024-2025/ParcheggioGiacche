@@ -87,14 +87,15 @@ class Veicolo:
         return
 
     def __le__(self , altroVeicolo):
-        if self.marca > altroVeicolo.marca:
-            return False
-        elif self.modello > altroVeicolo.modello:
-            return False
-        elif self.cilindrata > altroVeicolo.cilindrata:
-            return False
-        else:
-            return True
+        if self.marca <= altroVeicolo.marca:
+            return True 
+        elif self.marca == altroVeicolo.marca:
+            if self.modello <= altroVeicolo.modello:
+                return True
+            elif self.modello == altroVeicolo.modello:
+                if self.cilindrata <= altroVeicolo.cilindrata:
+                    return True
+        return False
     
     def __lt__(self , altroVeicolo):
         if self.marca < altroVeicolo.marca:

@@ -20,7 +20,7 @@ class PostoMezzo:
             else:
                 self.__occupato = False
                 self.__occupante = None
-                self.__dataOraFine = None 
+                self.__dataOraFine = None
         else:
             if dataOraFine == None:
                 self.__dataOraFine = dataOraFine
@@ -31,29 +31,54 @@ class PostoMezzo:
         return str(self.__dict__)
     def __repr__(self):
         return str(self.__dict__)
-        
+    
+    @property
+    def occupato(self):
+        return self.__occupato
+    @property
+    def occupante(self):
+        return self.__occupante
+    @property
+    def dataOraFine(self):
+        return self.__dataOraFine
+    
+    @occupato.setter
+    def occupato(self,nuovoOccupato):
+        self.__occupato = nuovoOccupato
+        return
+    @occupante.setter
+    def occupante(self,nuovoOccupante):
+        self.__occupante = nuovoOccupante
+        return
+    @dataOraFine.setter
+    def occupato(self,nuovaDataOraFine):
+        self.__dataOraFine = nuovaDataOraFine
+        return 
     def parcheggia(self , veicolo:Veicolo, dataOraFine):
-        if self.occupato == False:
-            self.occupato = True
-            self.occupante = veicolo
-            self.dataOraFine = dataOraFine
+        if self.__occupato == False:
+            self.__occupato = True
+            self.__occupante = veicolo
+            if dataOraFine > datetime.datetime.now():
+                self.__dataOraFine = dataOraFine
+            else:
+                raise ValueError ('Data e ora non valide')
         else:
             return 'Posto Occupato'
     def targaOccupante(self):
-        if self.occupato == True:
-            return self.occupante.targa
+        if self.__occupato == True:
+            return self.__occupante.targa
         else:
             return 'Parcheggio libero'
     def termineOccupazione(self):
-        if self.occupato == True:
-            return self.dataOraFine
+        if self.__occupato == True:
+            return self.__dataOraFine
         else:
             return 'Parcheggio libero'
     
 #---------------------------------------
 if __name__ == '__main__':
     veicolo1 = Auto(targa='PR000VA') 
-    posto = PostoMezzo(occupato=True , occupante=veicolo1 , dataOraFine=datetime.datetime(2025 , 1 , 16 , 16 , 47 , 0))
+    posto = PostoMezzo(occupato=True , occupante=veicolo1 , dataOraFine=datetime.datetime(2025 , 1 , 31 , 16 , 47 , 0))
     print(posto)
     print(posto.targaOccupante())
     print(posto.termineOccupazione())
