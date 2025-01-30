@@ -81,7 +81,10 @@ class Parcheggio:
             raise ValueError('Non abbiamo posti liberi per quel veicolo')
         
         self.__guadagno = float(self.__guadagno) + saldoDaPagare
+        return f'Si devono pagare {saldoDaPagare} euro'
+
         #-----------------------------------------------------------------
+    def salva(self):
         file = open('park.data' , 'w')
         file.write(f'{self.__postiAutoLiberi}\n{self.__postiMotoLiberi}\n')
         for x in self.__listaVeicoliParcheggiati:
@@ -89,7 +92,6 @@ class Parcheggio:
         file.write(f'\n{self.__guadagno}')
         file.close()
         #-----------------------------------------------------------------
-        return f'Si devono pagare {saldoDaPagare} euro'
         #-----------------------------------------------------------------
     
 if __name__ == '__main__':
@@ -99,6 +101,7 @@ if __name__ == '__main__':
     motoMistica = Moto(targa='BB12345')
     print(parcheggioMistico.parcheggia(motoMistica ,datetime.datetime(2025,3,30,9,46,0)))
     print(parcheggioMistico.guadagno)
+    parcheggioMistico.salva()
 
 
 

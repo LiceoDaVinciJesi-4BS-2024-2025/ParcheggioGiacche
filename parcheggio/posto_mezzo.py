@@ -75,6 +75,12 @@ class PostoMezzo:
             return self.__dataOraFine
         else:
             return 'Parcheggio libero'
+    def liberaParcheggio(self , autoDaEliminare):
+        if self.__occupante == autoDaEliminare:
+            self.__occupato = False
+            self.__occupante = None
+            self.__dataOraFine = None
+            return 'posto Liberato'
     
 #---------------------------------------
 if __name__ == '__main__':
@@ -83,6 +89,8 @@ if __name__ == '__main__':
     print(posto)
     print(posto.targaOccupante())
     print(posto.termineOccupazione())
+    print(posto.liberaParcheggio(veicolo1))
+    print(posto)
             
 
 
