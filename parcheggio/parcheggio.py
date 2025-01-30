@@ -4,38 +4,42 @@ from pathlib import Path
 class Parcheggio:
     def __init__(self):
         #-----------------------------------------------------------------
-        if Path('park.data').exists() == False:
-            file = open('park.data' , 'w')
-            file.write('1000\n500\n\n')
+        if Path('park.data').exists():
+                
+             
+            lista = []
+            file = open('park.data' , 'r')
+            contenuto = file.read().split(sep='\n')
             file.close()
-         
-        lista = []
-        file = open('park.data' , 'r')
-        contenuto = file.read().split(sep='\n')
-        file.close()
-        for riga in contenuto:
-            lista.append(riga)
+            for riga in contenuto:
+                lista.append(riga)
             #-----------------------------------------------------------------
+            
+            #-----------------------------------------------------------------
+            self.__postiAutoLiberi = int(lista[0])
+            lista.remove(lista[0])
+            self.__postiMotoLiberi = int(lista[0])
+            lista.remove(lista[0])
+            self.__listaVeicoliParcheggiati = lista[0].split(sep=';')
+            while '' in self.__listaVeicoliParcheggiati:
+                self.__listaVeicoliParcheggiati.remove('')
+            for x in self.__listaVeicoliParcheggiati:
+                listaParametriMezzo = x.split(sep='_')
+                if listaParametriMezzo[-1] <= str(datetime.datetime.now()):
+                    if 'Auto' in listaParametriMezzo[0]:
+                        self.__postiAutoLiberi += 1
+                    elif 'Moto' in listaParametriMezzo[0]:
+                        self.__postiMotoLiberi += 1
+                    self.__listaVeicoliParcheggiati.remove(x)
+            lista.remove(lista[0])
+            self.__guadagno = lista[0]
+            if self.__guadagno == '':
+                self.__guadagno = 0
         
-        #-----------------------------------------------------------------
-        self.__postiAutoLiberi = int(lista[0])
-        lista.remove(lista[0])
-        self.__postiMotoLiberi = int(lista[0])
-        lista.remove(lista[0])
-        self.__listaVeicoliParcheggiati = lista[0].split(sep=';')
-        while '' in self.__listaVeicoliParcheggiati:
-            self.__listaVeicoliParcheggiati.remove('')
-        for x in self.__listaVeicoliParcheggiati:
-            listaParametriMezzo = x.split(sep='_')
-            if listaParametriMezzo[-1] <= str(datetime.datetime.now()):
-                if 'Auto' in listaParametriMezzo[0]:
-                    self.__postiAutoLiberi += 1
-                elif 'Moto' in listaParametriMezzo[0]:
-                    self.__postiMotoLiberi += 1
-                self.__listaVeicoliParcheggiati.remove(x)
-        lista.remove(lista[0])
-        self.__guadagno = lista[0]
-        if self.__guadagno == '':
+        else:
+            self.__postiAutoLiberi = 1000
+            self.__postiMotoLiberi = 500
+            self.__listaVeicoliParcheggiati = []
             self.__guadagno = 0
         
             
@@ -77,7 +81,7 @@ class Parcheggio:
             raise ValueError('Non abbiamo posti liberi per quel veicolo')
         
         self.__guadagno = float(self.__guadagno) + saldoDaPagare
-#-----------------------------------------------------------------
+        #-----------------------------------------------------------------
         file = open('park.data' , 'w')
         file.write(f'{self.__postiAutoLiberi}\n{self.__postiMotoLiberi}\n')
         for x in self.__listaVeicoliParcheggiati:
