@@ -1,16 +1,22 @@
 from posto_mezzo import *
-
+from pathlib import Path
 
 class Parcheggio:
     def __init__(self):
         #-----------------------------------------------------------------
+        if Path('park.data').exists() == False:
+            file = open('park.data' , 'w')
+            file.write('1000\n500\n\n')
+            file.close()
+         
         lista = []
-        file = open('parkdata.txt' , 'r')
+        file = open('park.data' , 'r')
         contenuto = file.read().split(sep='\n')
         file.close()
-        #-----------------------------------------------------------------
         for riga in contenuto:
             lista.append(riga)
+            #-----------------------------------------------------------------
+        
         #-----------------------------------------------------------------
         self.__postiAutoLiberi = int(lista[0])
         lista.remove(lista[0])
@@ -21,7 +27,7 @@ class Parcheggio:
             self.__listaVeicoliParcheggiati.remove('')
         for x in self.__listaVeicoliParcheggiati:
             listaParametriMezzo = x.split(sep='_')
-            if listaParametriMezzo[1] > str(datetime.datetime.now()):
+            if listaParametriMezzo[-1] <= str(datetime.datetime.now()):
                 if 'Auto' in listaParametriMezzo[0]:
                     self.__postiAutoLiberi += 1
                 elif 'Moto' in listaParametriMezzo[0]:
@@ -31,6 +37,7 @@ class Parcheggio:
         self.__guadagno = lista[0]
         if self.__guadagno == '':
             self.__guadagno = 0
+        
             
         #-----------------------------------------------------------------
     
@@ -52,17 +59,18 @@ class Parcheggio:
     def guadagno(self):
         return self.__guadagno
     
-    def parcheggia(self, posto):
+    def parcheggia(self, veicolo , dataOraFine1):
+        posto = PostoMezzo(occupato=True , occupante=veicolo , dataOraFine=dataOraFine1)
         if type(posto.occupante) == Auto and self.__postiAutoLiberi != 0:
             self.__postiAutoLiberi -= 1
             orePermanenza = posto.dataOraFine - datetime.datetime.today()
-            saldoDaPagare = (int(orePermanenza.total_seconds())/60) * 1.5
+            saldoDaPagare = (int(orePermanenza.total_seconds())/3600) * 1.5
             self.__listaVeicoliParcheggiati.append(f'{posto.occupante}_{posto.dataOraFine}')
         
         elif type(posto.occupante) == Moto and self.__postiMotoLiberi != 0:
             self.__postiMotoLiberi -= 1
             orePermanenza = posto.dataOraFine - datetime.datetime.today()
-            saldoDaPagare = (int(orePermanenza.total_seconds())/60) * 1.2
+            saldoDaPagare = (int(orePermanenza.total_seconds())/3600) * 1.2
             self.__listaVeicoliParcheggiati.append(f'{posto.occupante}_{posto.dataOraFine}')
 
         else:
@@ -70,7 +78,7 @@ class Parcheggio:
         
         self.__guadagno = float(self.__guadagno) + saldoDaPagare
 #-----------------------------------------------------------------
-        file = open('parkdata.txt' , 'w')
+        file = open('park.data' , 'w')
         file.write(f'{self.__postiAutoLiberi}\n{self.__postiMotoLiberi}\n')
         for x in self.__listaVeicoliParcheggiati:
             file.write(f'{x};')
@@ -82,13 +90,11 @@ class Parcheggio:
     
 if __name__ == '__main__':
     autoMistica = Auto(targa='AA123AA')
-    postoMistico = PostoMezzo(occupato=True , occupante=autoMistica , dataOraFine=datetime.datetime(2025,1,30,9,46,0))
     parcheggioMistico = Parcheggio()
-    print(parcheggioMistico.parcheggia(postoMistico))
+    print(parcheggioMistico.parcheggia(autoMistica ,datetime.datetime(2025,3,30,9,46,0)))
     motoMistica = Moto(targa='BB12345')
-    postoMistico2 = PostoMezzo(occupato=True , occupante=motoMistica , dataOraFine=datetime.datetime(2025,1,30,9,46,0))
-    print(parcheggioMistico.parcheggia(postoMistico2))
-
+    print(parcheggioMistico.parcheggia(motoMistica ,datetime.datetime(2025,3,30,9,46,0)))
+    print(parcheggioMistico.guadagno)
 
 
 

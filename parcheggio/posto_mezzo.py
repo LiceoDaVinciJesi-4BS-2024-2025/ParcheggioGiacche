@@ -54,6 +54,7 @@ class PostoMezzo:
     def occupato(self,nuovaDataOraFine):
         self.__dataOraFine = nuovaDataOraFine
         return 
+    
     def parcheggia(self , veicolo:Veicolo, dataOraFine):
         if self.__occupato == False:
             self.__occupato = True
